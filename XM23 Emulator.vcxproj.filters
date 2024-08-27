@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Arithmetic and Logic Execution.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Branch_decode_exectue.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\cache.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Control C software.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Cpu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Debugger.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Decode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Emulator.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Loader.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Memory.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\PSW code.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Register_Operations.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Assembler.exe" />
+    <None Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Strings.asm">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Array_max.xme" />
+    <None Include="Array_sum.xme" />
+    <None Include="ArrayInit.xme" />
+    <None Include="assn3_test.asm">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="assn3_test.lis" />
+    <None Include="assn3_test.xme" />
+    <None Include="CEX_test.xme" />
+    <None Include="Count_string.xme" />
+    <None Include="dadd_and_or_test.xme" />
+    <None Include="LAB5_test.asm">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="LAB5_test.lis" />
+    <None Include="LAB5_test.xme" />
+    <None Include="load_to_mem.xme" />
+    <None Include="psw_test.xme" />
+    <None Include="StkFrm.xme" />
+    <None Include="Strings.asm">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Strings.lis" />
+    <None Include="Strings.xme" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\bit_extract.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\cache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\CPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ASSIGNMENTS\Assignment3\XM23 Emulator - ASSN3\Emulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data.txt" />
+  </ItemGroup>
+</Project>

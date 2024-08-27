@@ -1,0 +1,46 @@
+X-Makina Assembler - Version XM-23 Single Pass+ Assembler - Release 02.06.23
+Input file name: assn3_test.asm
+Time of assembly: Wed 2 Aug 2023 03:57:17 
+  1	    	     	;manually set the current priority to 7, so program starts with priority 7
+  2	0000	4D83		SETPRI	#3
+  3	0002	4D85		SETPRI	#5
+  4	0004	4D80		SETPRI	#0
+  5	0006	4DA8		SETCC	S
+  6	0008	69B8		MOVLZ	#37,R0; set current priority of ISR vector to 1. Set all psw status except sleep
+  7	000A	6003		MOVL	#1000,R3; set vector entry point for handler to address 0x1000
+  8	000C	7883		MOVH	#1000,R3
+  9	000E	6621		MOVL	#FFC4,R1; get address of vector 1 psw status
+ 10	0010	7FF9		MOVH	#FFC4,R1
+ 11	0012	6632		MOVL	#FFC6,R2; get address of vector 1 entry point to handler
+ 12	0014	7FFA		MOVH	#FFC6,R2
+ 13	0016	5C01		ST	R0,R1; store psw status of handler in vector 1
+ 14	0018	5C1A		ST	R3,R2; store address of entry point to handler in vector 1 entry point to handler position in memory 
+ 15	001A	4D91		SVC 	#1; trap to vector 1
+ 16	001C	68B8		MOVLZ	#17,R0; set current priority of ISR vector to 1. Set all psw status except sleep
+ 17	001E	6003		MOVL	#1000,R3; set vector entry point for handler to address 0x1000
+ 18	0020	7883		MOVH	#1000,R3
+ 19	0022	6621		MOVL	#FFC4,R1; get address of vector 1 psw status
+ 20	0024	7FF9		MOVH	#FFC4,R1
+ 21	0026	6632		MOVL	#FFC6,R2; get address of vector 1 entry point to handler
+ 22	0028	7FFA		MOVH	#FFC6,R2
+ 23	002A	5C01		ST	R0,R1; store psw status of handler in vector 1
+ 24	002C	5C1A		ST	R3,R2; store address of entry point to handler in vector 1 entry point to handler position in memory 
+ 25	002E	4D91		SVC 	#1; trap to vector 1	
+ 26	0030	3C00		BRA	DONE
+ 27	0032	3FFF	DONE	BRA	DONE
+Successful completion of assembly - 2P
+
+** Symbol table **
+Name                               	Type	Value	Decimal
+DONE                               	REL	0032	50	PRI
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\rober\Desktop\DAL UNI\3rd year\Summer 2023\ECED 3403 - Computer Architecture\LABS\LAB 3\Testing\assn3_test.xme
+

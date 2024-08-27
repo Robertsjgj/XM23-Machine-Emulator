@@ -1,0 +1,184 @@
+X-Makina Assembler - Version XM-23 Single Pass+ Assembler - Release 02.06.23
+Input file name: Strings.asm
+Time of assembly: Fri 21 Jul 2023 23:57:27 
+  1	    	     	;
+  2	    	     	; Example X-Makina program
+  3	    	     	; Assembling two string functions (strlen() and strcpy())
+  4	    	     	; Called by mainline
+  5	    	     	;
+  6	    	     	; L. Hughes
+  7	    	     	;
+  8	    	     	; 11 May 2023 - XM23 upgrade
+  9	    	     	; 25 Mar 2020 - XM3 upgrade
+ 10	    	     	; 28 May 2019 - Rewrite to XM2
+ 11	    	     	; 11 Jun 2018 - Second example of storing length using relative addressing
+ 12	    	     	; 11 May 2018 - Initial release
+ 13	    	     	;
+ 14	    	     	STKTOP	equ	#FFC0	; Stack top - PUSH (decr then write); PULL (read then incr)
+ 15	    	     	NUL	equ	'\0'	; End-of-string indicator
+ 16	    	     	; 
+ 17	    	     	r2	equ	R2	; r2 is alias of R2
+ 18	    	     	LR	equ	R5	; LR is alias of R5
+ 19	    	     	SP	equ	R6	; SP is alias of R6 
+ 20	    	     	PC	equ	R7	; PC is alias of R7
+ 21	    	     	;
+ 22	    	     	; Code space
+ 23	    	     	;
+ 24	    	     		org	#1000
+ 25	    	     	Main
+ 26	    	     	;
+ 27	    	     	; Initialize stack point
+ 28	    	     	;
+ 29	1000	7606		movls	STKTOP,SP	; STKTOP.LSB to SP.LSB; $FF to SP.MSB
+ 30	    	     	;
+ 31	    	     	; R1 points to string
+ 32	    	     	;
+ 33	1002	6011		movl	MyStr,R1
+ 34	1004	7981		movh	MyStr,R1
+ 35	    	     	;
+ 36	    	     	; Call strlen()
+ 37	    	     	; R1 points to string
+ 38	    	     	; R0 returned with length
+ 39	    	     	;
+ 40	1006	0007		bl	strlen	
+ 41	    	     	;
+ 42	    	     	; Two examples of storing (R0, length, in MSLen):
+ 43	    	     	;
+ 44	    	     	; 1. Indexed using R1 (address of MyStr)
+ 45	    	     	;
+ 46	1008	4291		sub	#2,R1	; Word before MyStr is MSLen
+ 47	100A	5C81		st.w	R0,R1+	; Save R0 in MSLen
+ 48	    	     				; Bit of a cheat - increment R1 by 2 to point 
+ 49	    	     				; back to string MyStr
+ 50	    	     	;
+ 51	    	     	; 2. Relative using offset "back" from R1 to MSLen's location
+ 52	    	     	;
+ 53	100C	FF01		str.w	R0,R1,$-2	; mem[R1-2] = R0
+ 54	    	     					; Note that R1 is unchanged
+ 55	    	     	;
+ 56	    	     	; Call strcpy()
+ 57	    	     	; MyStr (R1) to Str2 (r2)
+ 58	    	     	; Setup destination str in R2
+ 59	    	     	;
+ 60	100E	60D2		movl	Str2,r2
+ 61	1010	7982		movh	Str2,r2
+ 62	    	     	;
+ 63	1012	07F6		bl	strcpy	; LR holds return address
+ 64	    	     	;
+ 65	    	     	; No halt, loop until ^C
+ 66	    	     	;
+ 67	    	     	Done	
+ 68	1014	3FFF		bra	Done
+ 69	    	     	;
+ 70	    	     	; String length function
+ 71	    	     	; Input: R1 - Address of NUL-terminated string
+ 72	    	     	; Returns: Length of string in R0
+ 73	    	     	;
+ 74	    	     	strlen
+ 75	    	     	; 
+ 76	1016	5F0E		st	R1,-SP	; Push R1 (to restore on exit)
+ 77	1018	5F16		st	R2,-SP	; Push R2 (holds character read)
+ 78	101A	6800		movlz	#0,R0	; Return length in R0 (initially zero)
+ 79	    	     	;
+ 80	    	     	strlen1	
+ 81	101C	58CA		ld.b	R1+,R2	; Copy byte [R1] to R2 and R1 incremented by 1
+ 82	101E	45C2		cmp.b	NUL,R2	; Compare byte (in R2) with NUL
+ 83	1020	2002		beq	strlen2	; If equal, go to strlen2
+ 84	1022	4088		add	#1,R0	; R0 (length) incremented by 1
+ 85	1024	3FFB		bra	strlen1	; Check next byte
+ 86	    	     	;
+ 87	    	     	; Finished
+ 88	    	     	;
+ 89	    	     	strlen2	
+ 90	1026	58B2		ld	SP+,R2	; Pull R2
+ 91	1028	58B1		ld	SP+,R1	; Pull R1
+ 92	102A	4C2F		mov	LR,PC	; Return to caller.  R0 has length
+ 93	    	     	;
+ 94	    	     		org	#2000
+ 95	    	     	;
+ 96	    	     	; String copy function
+ 97	    	     	; Input: R1 - src string; R2 - dst string
+ 98	    	     	; R0 holds char - stop when NUL
+ 99	    	     	; No check on length of dst string
+100	    	     	; Returns: nothing
+101	    	     	;
+102	    	     	strcpy
+103	2000	5F06		st	R0,-SP	; Push R0
+104	2002	5F0E		st	R1,-SP	; Push R1
+105	2004	5F16		st	R2,-SP	; Push R2
+106	    	     	;
+107	2006	6803		movlz	#0,R3
+108	    	     	;
+109	    	     	strcpy1
+110	2008	408B		add	#1,R3
+111	200A	58C8		ld.b	R1+,R0	; ch = src[i++]
+112	200C	5CC2		st.b	R0,R2+	; dst[j++] = ch (includes NUL)
+113	200E	47F8		and.b	$-1,R0
+114	    	     	;
+115	    	     	; ch = NUL? - AND sets PSW flags
+116	    	     	; No - do next ch
+117	    	     	;
+118	2010	27FB		bne	strcpy1
+119	    	     	;
+120	    	     	; NUL found - restore registers and return
+121	    	     	;
+122	2012	58B2		ld	SP+,R2	; Pull R2
+123	2014	58B1		ld	SP+,R1	; Pull R1
+124	2016	58B0		ld	SP+,R0	; Pull R0
+125	2018	4C2F		mov	LR,PC	; return to caller
+126	    	     	;
+127	    	     	; Data space 
+128	    	     	; Setting the origin could be unsafe - if code addresses extend past $1000, they
+129	    	     	; could be overwritten by the data.  This is one argument for a linker.
+130	    	     	;
+131	    	     		org	#3000
+132	    	     	;
+133	3000	0000	MSLen	bss	#2	; Reserve 2 bytes (word) for length of MyStr
+134	    	     	;
+135	3002	6854	MyStr	ascii	"The cat sat on the mat\n\0"
+135	3004	2065
+135	3006	6163
+135	3008	2074
+135	300A	6173
+135	300C	2074
+135	300E	6E6F
+135	3010	7420
+135	3012	6568
+135	3014	6D20
+135	3016	7461
+135	3018	000A
+136	    	     	;
+137	301A	0000	Str2	bss	$100	; 100 bytes for destination string
+138	    	     	;
+139	    	     		end	Main
+Successful completion of assembly - 2P
+
+** Symbol table **
+Name                               	Type	Value	Decimal
+MSLen                              	REL	3000	12288	PRI
+strcpy1                            	REL	2008	8200	PRI
+strlen2                            	REL	1026	4134	PRI
+strlen1                            	REL	101C	4124	PRI
+Done                               	REL	1014	4116	PRI
+strcpy                             	REL	2000	8192	PRI
+Str2                               	REL	301A	12314	PRI
+strlen                             	REL	1016	4118	PRI
+MyStr                              	REL	3002	12290	PRI
+Main                               	REL	1000	4096	PRI
+PC                                 	REG	0007	7	PRI
+SP                                 	REG	0006	6	PRI
+LR                                 	REG	0005	5	PRI
+r2                                 	REG	0002	2	PRI
+NUL                                	CON	0000	0	PRI
+STKTOP                             	CON	FFC0	-64	PRI
+R7                                 	REG	0007	7	PRI
+R6                                 	REG	0006	6	PRI
+R5                                 	REG	0005	5	PRI
+R4                                 	REG	0004	4	PRI
+R3                                 	REG	0003	3	PRI
+R2                                 	REG	0002	2	PRI
+R1                                 	REG	0001	1	PRI
+R0                                 	REG	0000	0	PRI
+
+.XME file: C:\Users\rober\Desktop\DAL UNI\3rd year\Summer 2023\ECED 3403 - Computer Architecture\ASSIGNMENTS\Assignment2\XM23 Emulator - ASSN2\Strings.xme
+
